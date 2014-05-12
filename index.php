@@ -6,6 +6,7 @@ $pw = @$_POST['pw'];
 
 $getdata = @$_GET['id'];
 
+
 $html = <<<EOL
                     <!DOCTYPE html>
                     <html>
