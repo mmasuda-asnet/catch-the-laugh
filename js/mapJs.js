@@ -10,6 +10,7 @@ function getData(){
 function onBaloonclicked(){
     document.getElementById("idtext").value="clicked";
 }
+var markersArray = [];
 var map = null;
 var successCallback = function(position2) {
     var latlng = new google.maps.LatLng(position2.coords.latitude, position2.coords.longitude);
@@ -26,7 +27,7 @@ var successCallback = function(position2) {
     google.maps.event.addListener(marker, 'click', function() {
         onBaloonclicked();
     });
-}
+};
 
 function errorCallback(error) {
     google.maps.event.addListener(map, 'click', function(event) {
@@ -55,4 +56,22 @@ function initialize(id, pw) {
         maximumAge: 0
     };
     geolocation.getCurrentPosition(successCallback, errorCallback, option);
+}
+function placeMarker(location) {
+    var clickedLocation = new google.maps.LatLng(location);
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+    markersArray.push(marker);
+    google.maps.event.addListener(marker, 'click', function() {
+        onBaloonclicked();
+    });
+    // 余分なマーカーを消す
+    if (markersArray) {
+        var marker_length = markersArray.length;
+        for (i = 0; i < marker_length - 1; i++) {
+            markersArray.shift().setMap(null);
+        }
+    }
 }
