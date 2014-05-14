@@ -8,7 +8,7 @@ function getData(){
    
 }
 function onBaloonclicked(){
-    document.getElementById("idtext").value="clicked";
+    document.getElementById("selectFile").style.display="inline";
 }
 var markersArray = [];
 var map = null;
@@ -74,4 +74,27 @@ function placeMarker(location) {
             markersArray.shift().setMap(null);
         }
     }
+}
+
+function upload(form){
+    $form = $('#upload-form');
+    fd = new FormData($form[0]);
+    $.ajax(
+            'http://localhost/CatchTheLaugh/api/upload.php',
+    {
+        type: 'post',
+        processData: false,
+        contentType: false,
+        data: fd,
+        dataType: "json",
+        success: function(data){
+            alert(data.message);
+            document.getElementById("selectFile").style.display="none";
+        },
+        error: function(XMLHttpRequest,
+        textStatus, errorThrown){
+            alert("error");
+        }
+    });
+    return false;
 }
