@@ -34,20 +34,20 @@ if (is_null($pw) or is_null($pw)) {
     echo $html;
 } else {
     //POSTで値が渡された場合
-    $regPw = get_login_info($id, $pw);
-    if ($pw === $regPw) {
+    $id = get_login_info($id, $getdata ,$pw);
+    if (!$id) {
+        echo '<font color="red">パスワードちゃうで</font>';
+        echo $html;
+    }else{
         $_SESSION['id'] = $id;
         $_SESSION['eid'] = md5($id);
         $_SESSION['pw'] = $pw;
-        if(!is_null($getdata) and strlen($getdata) > 0){
-            header("Location: ./map/map.php?id=".$getdata);
-            
+        if (!is_null($getdata) and strlen($getdata) > 0) {
+            header("Location: ./map/map.php?id=" . $getdata);
         }
-        
+
         exit();
-    } else {
-        echo '<font color="red">パスワードちゃうで</font>';
-        echo $html;
     }
+    
 }
 ?>
